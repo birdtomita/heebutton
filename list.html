@@ -119,6 +119,7 @@
                 // callback for a successful deletion
                 success: function(theSavedObject) {
 
+                    sound();
                     // create a DOM element for this object
                     loadList();
 
@@ -219,7 +220,20 @@
             });
             loadList();
         });
+        function sound()
+        {
+        	// 対象となるID名
+        	var id = 'sound-file' ;
 
+        	// 初回以外だったら音声ファイルを巻き戻す
+        	if( typeof( document.getElementById( id ).currentTime ) != 'undefined' )
+        	{
+        		document.getElementById( id ).currentTime = 0;
+        	}
+
+        	// [ID:sound-file]の音声ファイルを再生[play()]する
+        	document.getElementById( id ).play() ;
+        }
     </script>
 
     <!-- START HEADER -->
@@ -248,8 +262,10 @@
 
     <div data-role="footer" data-position="fixed" data-fullscreen="true"
       data-theme="b" class="ui-bar" id="footer">
-      <a href="javascript:addToList()" data-icon="plus" data-theme="b" id="footer-button">HEE! GATTEN!!</a>
+        <a href="javascript:addToList()" data-icon="plus" data-theme="b" id="footer-button">HEE! GATTEN!!</a>
     </div>
-
+    <audio id="sound-file" preload="auto">
+    	<source src="./spo_ge_mbat03.mp3" type="audio/mp3">
+    </audio>
 </div>
 <!-- END PAGE -->
