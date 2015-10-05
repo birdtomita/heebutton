@@ -31,6 +31,7 @@
         <script src="js/html5-cloud-sdk-v2.2.1.js"></script>
         <script src="js/html5-analytics-sdk-2.1.5.js"></script>
         <script type="text/javascript">
+        /*
             function loginWithFacebook(){
 
                 var __obtained_access_token__ = "4e7db0b1ee0ce6d4bf1b1ae7e49f4732";
@@ -63,7 +64,7 @@
                 KiiSocialConnect.logIn(KiiSocialNetworkName.FACEBOOK, options, loginCallbacks);
 
             }
-
+*/
             // the user clicked the 'sign up' button
             function performRegistration() {
 
@@ -173,7 +174,7 @@
                 // bind clicks to our login/sign up methods
                 $("#register-button").click(performRegistration);
                 $("#login-button").click(performLogin);
-                $("#facebook-button").click(loginWithFacebook);
+//                $("#facebook-button").click(loginWithFacebook);
 
             });
 
@@ -208,7 +209,8 @@
                 <div style="margin:32px 18px;">
                     <a href="#" id="register-button" data-role="button" data-theme="e" style="margin-bottom:20px;">Register</a>
                     <a href="#" id="login-button" data-role="button" data-theme="b">Log In</a>
-                    <a href="#" id="facebook-button" data-role="button" data-theme="b">Facebook Log In</a>
+<!--                    <a href="#" id="facebook-button" data-role="button" data-theme="b">Facebook Log In</a>
+-->
                 </div>
 
             </div>
