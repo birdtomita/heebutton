@@ -104,6 +104,7 @@
                                 var groupUri = savedGroup.objectURI();
                                 // Get the reference ID.
                                 var groupID = savedGroup.getID();
+
                               },
                               failure: function(theGroup, errorString) {
                                  console.log("Error creating group: " + errorString);
@@ -164,6 +165,38 @@
 
                         // tell the console
                         Kii.logger("User authenticated: " + user);
+
+
+                        // Get the current login user
+                        var user = KiiUser.getCurrentUser();
+
+                        // Get a list of groups in which the current user is a member
+                        user.memberOfGroups({
+                          success: function(theUser, groupList) {
+                            for(var i=0; i<groupList.length; i++) {
+                              var g = groupList[i];
+                              // do something with the results
+                              alert("groupmember id="+g.getID()+" uri="+g.objectURI());
+                            }
+                          },
+                          failure: function(theUser, anErrorString) {
+                            // do something with the error response
+                          }
+                        });
+
+                        // Get a list of groups in which the current user is a owner
+                        user.ownerOfGroups({
+                          success: function(theUser, groupList) {
+                            for(var i=0; i<groupList.length; i++) {
+                              var g = groupList[i];
+                              alert("groupowner id="+g.getID()+" uri="+g.objectURI());
+                              // do something with the results
+                            }
+                          },
+                          failure: function(theUser, anErrorString) {
+                            // do something with the error response
+                          }
+                        });
                     },
 
                     // callback for failed registration
