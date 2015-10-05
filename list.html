@@ -23,10 +23,11 @@
     <script type="text/javascript">
 
         // define some global variables
-        var BUCKET_NAME = "myObjects";
+        var BUCKET_NAME = "HeeGatten";
         var KEY_NAME = "myObjectValue";
         var objectCount = 0;
         var results;
+        var userName = "none";
 
         // a UI method to create a list item based on a KiiObject
         function createListItem(obj, index) {
@@ -38,7 +39,7 @@
 
             // add the title/subtitle text
             $(link).append("<h3>"+obj.get(KEY_NAME)+"</h3>");
-            $(link).append("<p>"+obj.getCreated()+"</p>");
+            $(link).append("<p>"+obj.get("UserName") + " "+ +new Date(obj.getCreated()).toLocaleString()+"</p>");
 
             // build the element
             $(row).append(link);
@@ -48,7 +49,7 @@
 
             // build the element
             $(deleteLink).append("<h3>"+obj.get(KEY_NAME)+"</h3>");
-            $(deleteLink).append("<p>"+obj.getCreated()+"</p>");
+            $(deleteLink).append("<p>"+obj.get("UserName") + " "+ +new Date(obj.getCreated()).toLocaleString()+"</p>");
 
             // append the delete button to the row
             $(row).append(deleteLink);
@@ -76,6 +77,8 @@
 
                     // hide the loader
                     $.mobile.hidePageLoadingMsg();
+                    objectCount--;
+                    $("#objectCount").html(objectCount);
                 },
 
                 // callback for a failed deletion
@@ -100,13 +103,15 @@
             $.mobile.showPageLoadingMsg();
 
             // get the defined bucket belonging to this user
-            var bucket = KiiUser.getCurrentUser().bucketWithName(BUCKET_NAME);
+            //var bucket = KiiUser.getCurrentUser().bucketWithName(BUCKET_NAME);
+            var bucket = Kii.bucketWithName(BUCKET_NAME);
 
             // create the object
             var object = bucket.createObject();
 
             // set a key/value pair
-            object.set(KEY_NAME, "MyObject " + (++objectCount));
+            object.set(KEY_NAME, userName + " say HEE_GATTEN " + (++objectCount));
+            object.set("UserName", userName);
 
             // perform an asynchronous creation, with callbacks
             object.save({
@@ -144,7 +149,8 @@
             $.mobile.showPageLoadingMsg();
 
             // get the defined bucket belonging to this user
-            var bucket = KiiUser.getCurrentUser().bucketWithName(BUCKET_NAME);
+            //var bucket = KiiUser.getCurrentUser().bucketWithName(BUCKET_NAME);
+            var bucket = Kii.bucketWithName(BUCKET_NAME);
 
             // create an empty KiiQuery (will return all objects in the bucket)
             var queryObject = KiiQuery.queryWithClause(null);
@@ -172,6 +178,8 @@
                         // add the row to the list
                         $("#listview").append(row);
                     }
+                    objectCount = resultSet.length;
+                    $("#objectCount").html(objectCount);
 
                     // refresh the list to show the added results
                     $("#listview").listview('refresh');
@@ -197,6 +205,18 @@
 
         // when this page loads, load the existing objects from the server
         $("#listPage").live('pageinit', function() {
+            var user = KiiUser.getCurrentUser();
+            user.refresh({
+              success: function(user) {
+                console.log("User's information retrieved!");
+
+                // Get the predefined fields.
+                userName = user.getUsername();
+              },
+              failure: function(user, errorString) {
+                console.log("Error: " + errorString);
+              }
+            });
             loadList();
         });
 
@@ -204,8 +224,7 @@
 
     <!-- START HEADER -->
     <div data-role="header" data-theme="c">
-        <h1>My Objects</h1>
-    	<a href="javascript:addToList()" data-icon="plus" data-theme="b">Add</a>
+        <h1>Hee Gatten <span id="objectCount"></span></h1>
     </div>
     <!-- END HEADER -->
 
@@ -216,7 +235,20 @@
 
     </div>
     <!-- END CONTENT -->
+    <style>
+    #footer {
+      box-sizing: border-box;
+    }
+    #footer-button{
+      display:block;
+    }
 
+    </style>
+
+    <div data-role="footer" data-position="fixed" data-fullscreen="true"
+      data-theme="b" class="ui-bar" id="footer">
+      <a href="javascript:addToList()" data-icon="plus" data-theme="b" id="footer-button">HEE! GATTEN!!</a>
+    </div>
 
 </div>
 <!-- END PAGE -->
