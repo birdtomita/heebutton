@@ -93,6 +93,23 @@
 
                             // tell the console
                             Kii.logger("User registered: " + user);
+
+
+                            var groupName = "myGroup";
+
+                            var group = KiiGroup.groupWithName(groupName);
+                            group.save({
+                              success: function(savedGroup) {
+                                // Get the reference URI.
+                                var groupUri = savedGroup.objectURI();
+                                // Get the reference ID.
+                                var groupID = savedGroup.getID();
+                              },
+                              failure: function(theGroup, errorString) {
+                                 console.log("Error creating group: " + errorString);
+                              }
+                            });
+
                         },
 
                         // callback for failed registration
