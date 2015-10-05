@@ -47,7 +47,7 @@
                   },
                   // unable to connect
                   failure : function(user, network, error) {
-                    alert("Unable to register: " + error);
+                    alert("Unable to register: " + error + " user:" +user + " network:" +network);
 
                     // tell the console
                     Kii.logger("Unable to register user: " + error);
