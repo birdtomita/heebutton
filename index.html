@@ -31,6 +31,38 @@
         <script src="js/html5-cloud-sdk-v2.2.1.js"></script>
         <script src="js/html5-analytics-sdk-2.1.5.js"></script>
         <script type="text/javascript">
+            function loginWithFacebook(){
+
+                var __obtained_access_token__ = "4e7db0b1ee0ce6d4bf1b1ae7e49f4732";
+
+                // SNS Registration
+                var loginCallbacks = {
+                  // successfully connected to Facebook
+                  success : function(user, network) {
+                    console.log("Connected user " + user + " to network: " + network);
+                    $.mobile.changePage("list.html");
+
+                    // tell the console
+                    Kii.logger("User authenticated: " + user);
+                  },
+                  // unable to connect
+                  failure : function(user, network, error) {
+                    alert("Unable to register: " + error);
+
+                    // tell the console
+                    Kii.logger("Unable to register user: " + error);
+                    console.log("Unable to connect to " + network + ". Reason: " + error);
+                  }
+                };
+
+                // set options required by Facebook's API, you should also get the __obtained_access_token__
+                var options = {
+                    access_token : __obtained_access_token__
+                };
+
+                KiiSocialConnect.logIn(KiiSocialNetworkName.FACEBOOK, options, loginCallbacks);
+
+            }
 
             // the user clicked the 'sign up' button
             function performRegistration() {
@@ -141,6 +173,7 @@
                 // bind clicks to our login/sign up methods
                 $("#register-button").click(performRegistration);
                 $("#login-button").click(performLogin);
+                $("#facebook-button").click(loginWithFacebook);
 
             });
 
@@ -175,6 +208,7 @@
                 <div style="margin:32px 18px;">
                     <a href="#" id="register-button" data-role="button" data-theme="e" style="margin-bottom:20px;">Register</a>
                     <a href="#" id="login-button" data-role="button" data-theme="b">Log In</a>
+                    <a href="#" id="facebook-button" data-role="button" data-theme="b">Facebook Log In</a>
                 </div>
 
             </div>
